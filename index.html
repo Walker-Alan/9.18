@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>全屏图片</title>
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .page {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      background: #000;
+    }
+
+    .page img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .audio {
+      position: fixed;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <img src="2595eba7c7f3f032e85d947e665b7ae1.jpg" alt="">
+  </main>
+
+  <audio
+    id="backgroundMusic"
+    class="audio"
+    src="h3R3,Felix%20Bennett%20-%20%E4%BB%96%E5%8F%AA%E6%98%AF%E7%BB%8F%E8%BF%87.mp3"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+  ></audio>
+
+  <script>
+    const music = document.getElementById('backgroundMusic');
+
+    function startMusic() {
+      music.play().catch(() => {});
+    }
+
+    startMusic();
+
+    function enableSound() {
+      music.muted = false;
+      music.volume = 1;
+      startMusic();
+      window.removeEventListener('pointerdown', enableSound);
+      window.removeEventListener('touchstart', enableSound);
+      window.removeEventListener('keydown', enableSound);
+    }
+
+    window.addEventListener('pointerdown', enableSound, { once: true });
+    window.addEventListener('touchstart', enableSound, { once: true, passive: true });
+    window.addEventListener('keydown', enableSound, { once: true });
+  </script>
+</body>
+</html>
